@@ -9,7 +9,16 @@ public class MACRS {
     static final String DEPRECIATION_VALUE = "DEPRECIATION_VALUE";
 
     public static void main(String[] args) {
-        printAllOCF(290000, 2180000, bonus100, 1730000, 636000, 240000, 24);
+        System.out.println(String.format("NPV = %.2f",
+                getNPV(290000, 2180000, bonus100, 1730000, 636000, 240000, 24, 12)));
+    }
+
+    static double getNPV(double nwc, double capSpending, Double[] depreciationSchedule, double sales, double cost,
+                         double priceSold, double taxRate, double discountRate) {
+        double ret = 0;
+        for(int i = 0; i < depreciationSchedule.length; i++)
+            ret += getOcfAtYear(nwc, capSpending, depreciationSchedule, sales, cost, priceSold, taxRate, i) / Math.pow(1 + discountRate / 100, i);
+        return ret;
     }
 
     static void printAllOCF(double nwc, double capSpending, Double[] depreciationSchedule, double sales, double cost,
@@ -48,11 +57,14 @@ public class MACRS {
 
     static Double getValueAtYear(final double initialValue, Double[] percentages, int year, String retVal) {
         int i = 1;
-        System.out.println("Year\tBVal\tDep\tBVal");
+//        System.out.println("Year\tBVal\tDep\tBVal");
         double bval = initialValue;
         for (double percent : percentages) {
             double dep = initialValue * percent / 100;
-            System.out.println(i++ + "\t" + bval + "\t" + dep + "\t" + (bval = bval - dep));
+            i++;
+            double bvalFinal = bval - dep;
+//            System.out.println(i + "\t" + bval + "\t" + dep + "\t" + bvalFinal);
+            bval = bvalFinal;
             if (year + 1 == i) {
                 if(BOOK_VALUE.equals(retVal))
                     return roundTwoDecimalPlaces(bval);
