@@ -7,7 +7,7 @@ public class MACRS {
     static final String DEPRECIATION_VALUE = "DEPRECIATION_VALUE";
 
     public static void main(String[] args) {
-        getOCF(1654000, 631000, getDepreciationValue(2300000, straightLinePercentages(3), 3),24);
+        getOCF(1755000, 665000, getDepreciationValue(2370000, straightLinePercentages(3), 3),24);
     }
 
     static void printSchedule(final double initialValue, Double[] percentages) {
@@ -27,17 +27,26 @@ public class MACRS {
         System.out.println("Year\tBVal\tDep\tBVal");
         double bval = initialValue;
         for (double percent : percentages) {
-            double dep = Math.round(initialValue * percent / 100 * 100.0) / 100.0;
-            System.out.println(i++ + "\t" + bval + "\t" + dep + "\t" + (bval = Math.round((bval - dep) * 100.0) / 100.0));
+            double dep = initialValue * percent / 100;
+            System.out.println(i++ + "\t" + bval + "\t" + dep + "\t" + (bval = bval - dep));
             if (year + 1 == i) {
                 if(BOOK_VALUE.equals(retVal))
-                    return bval;
+                    return roundTwoDecimalPlaces(bval);
                 else if(DEPRECIATION_VALUE.equals(retVal))
-                    return dep;
+                    return roundTwoDecimalPlaces(dep);
                 else return null;
             }
         }
         return null;
+    }
+
+    static double roundTwoDecimalPlaces(double val) {
+        return roundToDecimals(val, 2);
+    }
+
+    static double roundToDecimals(double val, int places) {
+        double adjustor = Math.pow(10, places);
+        return Math.round(val * adjustor) / adjustor;
     }
 
     static double getAftertaxSalvageValue(double initialValue, int depreciationYearsToZero, int yearSold,
@@ -52,7 +61,7 @@ public class MACRS {
     static Double[] straightLinePercentages(int years) {
         ArrayList<Double> doubles = new ArrayList<>();
         for (int i = 0; i < years; i++) {
-            doubles.add(Math.round(((double) 100 / years) * 100.0) / 100.0);
+            doubles.add((double) 100 / years);
         }
         return doubles.toArray(new Double[0]);
     }
