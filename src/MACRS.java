@@ -3,11 +3,17 @@ import java.util.ArrayList;
 public class MACRS {
 
     static final Double[] sevenYear = {14.29, 24.49, 17.49, 12.49, 8.93, 8.92, 8.93, 4.46};
+    static final Double[] threeYear = {33.33, 44.45, 14.81, 7.41};
     static final String BOOK_VALUE = "BOOK_VALUE";
     static final String DEPRECIATION_VALUE = "DEPRECIATION_VALUE";
 
     public static void main(String[] args) {
-        getOCF(1755000, 665000, getDepreciationValue(2370000, straightLinePercentages(3), 3),24);
+        double nwc = 410000;
+        System.out.println("final one: " +
+                (
+                        getOCF(1790000, 684000, getDepreciationValue(2290000, threeYear, 3),21) +
+                                getAftertaxSalvageValue(getBookValue(2290000, threeYear, 3),  420000, 21) +
+                                nwc));
     }
 
     static void printSchedule(final double initialValue, Double[] percentages) {
@@ -49,10 +55,14 @@ public class MACRS {
         return Math.round(val * adjustor) / adjustor;
     }
 
-    static double getAftertaxSalvageValue(double initialValue, int depreciationYearsToZero, int yearSold,
-                                          double priceSold, double taxRate) {
-        double bookVal = getBookValue(initialValue, straightLinePercentages(depreciationYearsToZero), yearSold);
-        double diff = priceSold - bookVal;
+    static double getStraightLineAftertaxSalvageValue(double initialValue, int depreciationYearsToZero, int yearSold,
+                                                      double priceSold, double taxRate) {
+        return getAftertaxSalvageValue(getBookValue(initialValue, straightLinePercentages(depreciationYearsToZero), yearSold),
+                priceSold, taxRate);
+    }
+
+    static double getAftertaxSalvageValue(double bookValue, double priceSold, double taxRate) {
+        double diff = priceSold - bookValue;
         double ret = Math.round((priceSold - diff * taxRate / 100) * 100.0) / 100.0;
         System.out.println("Aftertax salvage value = " + ret);
         return ret;
