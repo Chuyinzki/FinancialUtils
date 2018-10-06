@@ -8,12 +8,23 @@ public class MACRS {
     static final String DEPRECIATION_VALUE = "DEPRECIATION_VALUE";
 
     public static void main(String[] args) {
-        double nwc = 410000;
-        System.out.println("final one: " +
-                (
-                        getOCF(1790000, 684000, getDepreciationValue(2290000, threeYear, 3),21) +
-                                getAftertaxSalvageValue(getBookValue(2290000, threeYear, 3),  420000, 21) +
-                                nwc));
+        getOcfAtYear(410000, 2290000, threeYear, 1790000, 684000, 420000, 21, 3);
+    }
+
+    static double getOcfAtYear(double nwc, double capSpending, Double[] depreciationSchedule, double sales, double cost,
+                               double priceSold, double taxRate, int year) {
+        double ret;
+        if(year == 0) {
+            ret =  (nwc + capSpending) * -1;
+        } else if (year < depreciationSchedule.length - 1) {
+            ret =  getOCF(sales, cost, getDepreciationValue(capSpending, depreciationSchedule, year), taxRate);
+        } else {
+            ret =  getOCF(sales, cost, getDepreciationValue(capSpending, depreciationSchedule, year), taxRate) +
+                    getAftertaxSalvageValue(getBookValue(capSpending, depreciationSchedule, year), priceSold, taxRate) +
+                    nwc;
+        }
+        System.out.println(String.format("OCF at year %d is %.2f", year, ret));
+        return ret;
     }
 
     static void printSchedule(final double initialValue, Double[] percentages) {
