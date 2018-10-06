@@ -10,7 +10,7 @@ public class MACRS {
 
     public static void main(String[] args) {
         System.out.println(String.format("NPV = %.2f",
-                getNPV(290000, 2180000, bonus100, 1730000, 636000, 240000, 24, 12)));
+                getNPV(25500, 450000, straightLinePercentages(5), 140000, 0, 55000, 24, 12)));
     }
 
     static double getNPV(double nwc, double capSpending, Double[] depreciationSchedule, double sales, double cost,
@@ -94,7 +94,7 @@ public class MACRS {
 
     static Double[] straightLinePercentages(int years) {
         ArrayList<Double> doubles = new ArrayList<>();
-        for (int i = 0; i < years; i++) {
+        for (int i = 0; i < years + 1; i++) {
             doubles.add((double) 100 / years);
         }
         return doubles.toArray(new Double[0]);
