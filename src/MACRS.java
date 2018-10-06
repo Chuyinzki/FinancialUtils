@@ -9,8 +9,11 @@ public class MACRS {
     static final String DEPRECIATION_VALUE = "DEPRECIATION_VALUE";
 
     public static void main(String[] args) {
+//        System.out.println(getOCF(1696000, 659000, getDepreciationValue(2440000, straightLinePercentages(3), 1), 23));
+//        System.out.println(getAftertaxSalvageValue(getBookValue(660000, straightLinePercentages(8), 5), 135000, 25));
         System.out.println(String.format("NPV = %.2f",
-                getNPV(25500, 450000, straightLinePercentages(5), 140000, 0, 55000, 24, 12)));
+                getNPV(30000, 495000, straightLinePercentages(5), 149000, 0, 73000, 23, 11)));
+//        printSchedule(979000, sevenYear);
     }
 
     static double getNPV(double nwc, double capSpending, Double[] depreciationSchedule, double sales, double cost,
@@ -41,11 +44,11 @@ public class MACRS {
         getBookValue(initialValue, percentages, -1);
     }
 
-    static double getDepreciationValue(double initialValue, Double[] percentages, int year) {
+    static Double getDepreciationValue(double initialValue, Double[] percentages, int year) {
         return getValueAtYear(initialValue, percentages, year, DEPRECIATION_VALUE);
     }
 
-    static double getBookValue(double initialValue, Double[] percentages, int year){
+    static Double getBookValue(double initialValue, Double[] percentages, int year){
         return getValueAtYear(initialValue, percentages, year, BOOK_VALUE);
     }
 
@@ -55,10 +58,10 @@ public class MACRS {
         double bval = initialValue;
         for (double percent : percentages) {
             double dep = initialValue * percent / 100;
-            i++;
             double bvalFinal = bval - dep;
-//            System.out.println(i + "\t" + bval + "\t" + dep + "\t" + bvalFinal);
+//            System.out.println(String.format("%d\t%.2f\t%.2f\t%.2f", i, bval, dep, bvalFinal));
             bval = bvalFinal;
+            i++;
             if (year + 1 == i) {
                 if(BOOK_VALUE.equals(retVal))
                     return roundTwoDecimalPlaces(bval);
