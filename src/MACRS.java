@@ -4,11 +4,18 @@ public class MACRS {
 
     static final Double[] sevenYear = {14.29, 24.49, 17.49, 12.49, 8.93, 8.92, 8.93, 4.46};
     static final Double[] threeYear = {33.33, 44.45, 14.81, 7.41};
+    static final Double[] bonus100 = {100.0, 0d, 0d, 0d};
     static final String BOOK_VALUE = "BOOK_VALUE";
     static final String DEPRECIATION_VALUE = "DEPRECIATION_VALUE";
 
     public static void main(String[] args) {
-        getOcfAtYear(410000, 2290000, threeYear, 1790000, 684000, 420000, 21, 3);
+        printAllOCF(290000, 2180000, bonus100, 1730000, 636000, 240000, 24);
+    }
+
+    static void printAllOCF(double nwc, double capSpending, Double[] depreciationSchedule, double sales, double cost,
+                            double priceSold, double taxRate) {
+        for(int i = 0; i < depreciationSchedule.length; i++)
+            getOcfAtYear(nwc, capSpending, depreciationSchedule, sales, cost, priceSold, taxRate, i);
     }
 
     static double getOcfAtYear(double nwc, double capSpending, Double[] depreciationSchedule, double sales, double cost,
@@ -89,9 +96,7 @@ public class MACRS {
 
     static double getOCF(double sales, double cost, double dep, double taxRate) {
         double ebit = getEBIT(sales, cost, dep);
-        double ret = Math.round((ebit + dep - getTaxDue(ebit, taxRate)) * 100.0) / 100.0;
-        System.out.println("OCF = " + ret);
-        return ret;
+        return Math.round((ebit + dep - getTaxDue(ebit, taxRate)) * 100.0) / 100.0;
     }
 
     static double getTaxDue(double ebit, double taxRate) {
