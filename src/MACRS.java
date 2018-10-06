@@ -21,12 +21,6 @@ public class MACRS {
         return ret;
     }
 
-    static void printAllOCF(double nwc, double capSpending, Double[] depreciationSchedule, double sales, double cost,
-                            double priceSold, double taxRate) {
-        for(int i = 0; i < depreciationSchedule.length; i++)
-            getOcfAtYear(nwc, capSpending, depreciationSchedule, sales, cost, priceSold, taxRate, i);
-    }
-
     static double getOcfAtYear(double nwc, double capSpending, Double[] depreciationSchedule, double sales, double cost,
                                double priceSold, double taxRate, int year) {
         double ret;
