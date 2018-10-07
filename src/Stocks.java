@@ -1,11 +1,11 @@
 public class Stocks {
 
-    static double[] statesOfReturn = {.1, .6, .25, .05};
-    static double[] stockA = {.34, .19, -.01, -.15};
-    static double[] stockB = {.44, .15, -.09, -.19};
-    static double[] stockC = {.24, .08, -.07, -.11};
+    static double[] statesOfReturn = {.1, .5, .35, .05};
+    static double[] stockA = {.3, .15, -.02, -.10};
+    static double[] stockB = {.4, .11, -.05, -.15};
+    static double[] stockC = {.2, .09, -.03, -.07};
     static double[][] stocks = {stockA, stockB, stockC};
-    static double[] weights = {.25, .5, .25};
+    static double[] weights = {.32, .36, .32};
 
     public static void main(String[] args) throws Exception {
         summarize(statesOfReturn, weights, stocks);
@@ -29,7 +29,7 @@ public class Stocks {
     static double[] getEqualWeights(double[][] stocks) {
         double[] weights = new double[stocks.length];
         for (int i = 0; i < weights.length; i++) {
-            weights[i] = (double) 100 / weights.length;
+            weights[i] = (double) 1 / weights.length;
         }
         return weights;
     }
@@ -64,7 +64,7 @@ public class Stocks {
         double sumOfWeightedSquaredDeviation = 0;
         for (int i = 0; i < probOfState.length; i++)
             sumOfWeightedSquaredDeviation += Math.pow(ratesOfReturn[i] - expectedReturn, 2) * probOfState[i];
-        System.out.println(String.format("Variance: %.6f", sumOfWeightedSquaredDeviation));
+        System.out.println(String.format("Variance: %.7f", sumOfWeightedSquaredDeviation));
         return sumOfWeightedSquaredDeviation;
     }
 
