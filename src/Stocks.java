@@ -1,26 +1,35 @@
 public class Stocks {
 
-    static double[] statesOfReturn = {.65, .35};
-    static double[] stockA = {.11, .12};
-    static double[] stockB = {.19, .06};
-    static double[] stockC = {.37, -.05};
+    static double[] statesOfReturn = {.1, .6, .25, .05};
+    static double[] stockA = {.34, .19, -.01, -.15};
+    static double[] stockB = {.44, .15, -.09, -.19};
+    static double[] stockC = {.24, .08, -.07, -.11};
     static double[][] stocks = {stockA, stockB, stockC};
+    static double[] weights = {.25, .5, .25};
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Expected return = " + calculateExpectedReturnOfEquallyWeightedPortfolio(statesOfReturn, stocks));
+        summarize(statesOfReturn, weights, stocks);
+    }
+
+    static void summarize(double[] statesOfReturn, double[] weights, double[][] stocks) throws Exception {
+        calculateStandardDeviation(statesOfReturn, getPortfolioReturns(weights, stocks));
+    }
+
+    static double calculateExpectedReturnOfWeightedPortfolio(double[] probOfState, double[][] stocks, double[] weigths) throws Exception {
+        double ret = 0;
+        double[] percentages = getPortfolioReturns(weigths, stocks);
+        for (int i = 0; i < percentages.length; i++) ret += probOfState[i] * percentages[i];
+        return ret;
     }
 
     static double calculateExpectedReturnOfEquallyWeightedPortfolio(double[] probOfState, double[][] stocks) throws Exception {
-        double ret = 0;
-        double[] percentages = getPortfolioReturns(getEqualWeights(stocks), stocks);
-        for(int i = 0; i < percentages.length; i++) ret += probOfState[i] * percentages[i];
-        return ret;
+        return calculateExpectedReturnOfWeightedPortfolio(probOfState, stocks, getEqualWeights(stocks));
     }
 
     static double[] getEqualWeights(double[][] stocks) {
         double[] weights = new double[stocks.length];
-        for(int i = 0; i < weights.length; i++) {
-            weights[i] = (double)100/weights.length;
+        for (int i = 0; i < weights.length; i++) {
+            weights[i] = (double) 100 / weights.length;
         }
         return weights;
     }
@@ -29,7 +38,7 @@ public class Stocks {
         double[] portfolioReturns = new double[returnRates[0].length];
         for (int i = 0; i < returnRates[0].length; i++) {
             double[] row = new double[returnRates.length];
-            for(int j = 0; j < returnRates.length; j++) row[j] = returnRates[j][i];
+            for (int j = 0; j < returnRates.length; j++) row[j] = returnRates[j][i];
             portfolioReturns[i] = calculateReturnIfStateOccurs(investmentWeights, row);
         }
         return portfolioReturns;
@@ -38,7 +47,7 @@ public class Stocks {
     static double calculateReturnIfStateOccurs(double[] investmentWeights, double[] returnRate) throws Exception {
         if (investmentWeights.length != returnRate.length) throw new Exception("Lengths must be the same");
         double ret = 0;
-        for(int i = 0; i < investmentWeights.length; i++) ret += investmentWeights[i]*returnRate[i];
+        for (int i = 0; i < investmentWeights.length; i++) ret += investmentWeights[i] * returnRate[i];
         return ret;
     }
 
@@ -46,15 +55,23 @@ public class Stocks {
         if (probOfState.length != ratesOfReturn.length) throw new Exception("Lengths must be the same");
         double expectedReturn = 0;
         for (int i = 0; i < probOfState.length; i++) expectedReturn += probOfState[i] * ratesOfReturn[i];
+        System.out.println(String.format("Expected rate of return: %.2f%%", expectedReturn * 100));
         return expectedReturn;
     }
 
-    static double calculateStandardDeviation(double[] probOfState, double[] ratesOfReturn) throws Exception {
+    static double calculateVariance(double[] probOfState, double[] ratesOfReturn) throws Exception {
         double expectedReturn = calculateExpectedReturn(probOfState, ratesOfReturn);
-        double sumOfWeightedSquaredVariances = 0;
+        double sumOfWeightedSquaredDeviation = 0;
         for (int i = 0; i < probOfState.length; i++)
-            sumOfWeightedSquaredVariances += Math.pow(ratesOfReturn[i] - expectedReturn, 2) * probOfState[i];
-        return Math.sqrt(sumOfWeightedSquaredVariances);
+            sumOfWeightedSquaredDeviation += Math.pow(ratesOfReturn[i] - expectedReturn, 2) * probOfState[i];
+        System.out.println(String.format("Variance: %.6f", sumOfWeightedSquaredDeviation));
+        return sumOfWeightedSquaredDeviation;
+    }
+
+    static double calculateStandardDeviation(double[] probOfState, double[] ratesOfReturn) throws Exception {
+        double ret = Math.sqrt(calculateVariance(probOfState, ratesOfReturn));
+        System.out.println(String.format("Standard deviation: %.2f%%", ret * 100));
+        return ret;
     }
 
 }
