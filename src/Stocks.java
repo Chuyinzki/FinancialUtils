@@ -1,11 +1,11 @@
 public class Stocks {
 
-    static double[] statesOfReturn = {.1, .5, .35, .05};
-    static double[] stockA = {.3, .15, -.02, -.10};
-    static double[] stockB = {.4, .11, -.05, -.15};
-    static double[] stockC = {.2, .09, -.03, -.07};
+    static double[] statesOfReturn = {.25, .5, .2, .05};
+    static double[] stockA = {.37, .21, -.05, -.15};
+    static double[] stockB = {.47, .18, -.08, -.33};
+    static double[] stockC = {.27, .12, -.05, -.1};
     static double[][] stocks = {stockA, stockB, stockC};
-    static double[] weights = {.32, .36, .32};
+    static double[] weights = {.25, .50,.25};
 
     public static void main(String[] args) throws Exception {
         summarize(statesOfReturn, weights, stocks);

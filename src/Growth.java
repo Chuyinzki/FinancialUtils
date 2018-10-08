@@ -4,7 +4,7 @@ public class Growth {
 
     public static void main(String[] args) {
 
-        System.out.println("Final: " + calculateGeometricMean(calculateGrowthPercentages(dividends)));
+        System.out.println("Final: " + calculateGeometricMean(dividends));
     }
 
     static double[] calculateGrowthPercentages(double[] dividends) {
@@ -20,11 +20,18 @@ public class Growth {
         return add;
     }
 
+    static double multiplyNumbers(double[] numbers) {
+        double mult = 1;
+        for(double d : numbers) mult *= d;
+        return mult;
+    }
+
     static double calculateArithmeticMean(double[] percentages) {
         return addNumbers(percentages) / percentages.length;
     }
 
-    static double calculateGeometricMean(double[] percentages) {
-        return Math.pow(addNumbers(percentages), (double)1/percentages.length) - 1;
+    static double calculateGeometricMean(double[] dividends) {
+        return Math.pow(dividends[dividends.length - 1]/ dividends[0], (double)1/(dividends.length - 1)) - 1;
+//        return Math.pow(multiplyNumbers(percentages), (double)1/percentages.length);
     }
 }

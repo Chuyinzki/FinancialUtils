@@ -9,11 +9,12 @@ public class MACRS {
     static final String DEPRECIATION_VALUE = "DEPRECIATION_VALUE";
 
     public static void main(String[] args) {
-//        System.out.println(getOCF(1696000, 659000, getDepreciationValue(2440000, straightLinePercentages(3), 1), 23));
-//        System.out.println(getAftertaxSalvageValue(getBookValue(660000, straightLinePercentages(8), 5), 135000, 25));
+//        System.out.println(getOCF(661400, 422900, 100100, 22));
+//        System.out.println(getOCF(661400, 422900, getDepreciationValue(2440000, straightLinePercentages(3), 1), 23));
+//        System.out.println(getAftertaxSalvageValue(getBookValue(705000, straightLinePercentages(8), 5), 153000, 24));
         System.out.println(String.format("NPV = %.2f",
-                getNPV(30000, 495000, straightLinePercentages(5), 149000, 0, 73000, 23, 11)));
-//        printSchedule(979000, sevenYear);
+                getNPV(30500, 500000, straightLinePercentages(5), 150000, 0, 75000, 24, 12)));
+//        printSchedule(982000, sevenYear);
     }
 
     static double getNPV(double nwc, double capSpending, Double[] depreciationSchedule, double sales, double cost,
