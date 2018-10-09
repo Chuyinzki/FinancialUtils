@@ -1,9 +1,9 @@
 public class Stocks {
 
-    static double[] statesOfReturn = {.25, .5, .2, .05};
-    static double[] stockA = {.37, .21, -.05, -.15};
-    static double[] stockB = {.47, .18, -.08, -.33};
-    static double[] stockC = {.27, .12, -.05, -.1};
+    static double[] statesOfReturn = {.1, .6, .25, .05};
+    static double[] stockA = {.34, .19, -.01, -.15};
+    static double[] stockB = {.44, .15, -.09, -.19};
+    static double[] stockC = {.24, .08, -.07, -.11};
     static double[][] stocks = {stockA, stockB, stockC};
     static double[] weights = {.25, .50,.25};
 

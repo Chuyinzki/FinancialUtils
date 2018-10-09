@@ -10,10 +10,10 @@ public class MACRS {
 
     public static void main(String[] args) {
 //        System.out.println(getOCF(661400, 422900, 100100, 22));
-//        System.out.println(getOCF(661400, 422900, getDepreciationValue(2440000, straightLinePercentages(3), 1), 23));
+//        System.out.println(getOCF(1675000, 645000, getDepreciationValue(2370000, straightLinePercentages(3), 3), 21));
 //        System.out.println(getAftertaxSalvageValue(getBookValue(705000, straightLinePercentages(8), 5), 153000, 24));
         System.out.println(String.format("NPV = %.2f",
-                getNPV(30500, 500000, straightLinePercentages(5), 150000, 0, 75000, 24, 12)));
+                getNPV(32500, 520000, straightLinePercentages(5), 154000, 0, 83000, 23, 11)));
 //        printSchedule(982000, sevenYear);
     }
 

@@ -32,6 +32,5 @@ public class Growth {
 
     static double calculateGeometricMean(double[] dividends) {
         return Math.pow(dividends[dividends.length - 1]/ dividends[0], (double)1/(dividends.length - 1)) - 1;
-//        return Math.pow(multiplyNumbers(percentages), (double)1/percentages.length);
     }
 }
