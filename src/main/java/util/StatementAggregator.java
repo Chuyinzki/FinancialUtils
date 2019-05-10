@@ -36,7 +36,7 @@ public class StatementAggregator {
         System.out.println("Here they are sorted:");
 
         for (Double doubly : charges)
-            System.out.println(String.format("%d: $%.2f", counter++, doubly));
+            System.out.println(String.format("%d: $%.2f", counter2++, doubly));
 
 
         System.out.println(String.format("The total amount for this statement is: $%.2f", result));
